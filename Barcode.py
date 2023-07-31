@@ -34,7 +34,7 @@ def AnyBarcode(text, Type='code128'):
     img.show()  # Display the barcode image
 
 # Example: Generate and display a barcode for the given text 'Pardis Kiaeifar' using the default 'code128' type.
-AnyBarcode('Pardis Kiaeifar')
+AnyBarcode('PariKia')
 
 # Example: Generate and display an EAN-13 barcode for the given number '1001234567890'.
 NumberBarcode('1001234567890')
