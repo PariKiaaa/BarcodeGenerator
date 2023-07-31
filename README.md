@@ -1,8 +1,10 @@
-Barcode Generator
+# Barcode Generator
+
+## Description
 
 This is a Python script that allows you to generate barcodes for numeric values and text inputs. The script uses the `barcode` and `PIL` (Python Imaging Library) libraries to create and display barcode images. The barcodes generated can be saved as PNG files.
 
-Prerequisites
+## Prerequisites
 
 Before running the script, make sure you have the following libraries installed:
 
@@ -13,7 +15,7 @@ You can install the required libraries using pip:
 
 pip install barcode[pillow]
 
-Usage
+## Usage
 
 1. Clone the repository or download the Python script `Barcode.py` and run the code.
 
