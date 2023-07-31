@@ -11,10 +11,6 @@ Before running the script, make sure you have the following libraries installed:
 - barcode
 - PIL
 
-You can install the required libraries using pip:
-
-pip install barcode[pillow]
-
 ## Usage
 
 1. Clone the repository or download the Python script `Barcode.py` and run the code.
