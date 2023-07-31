@@ -3,49 +3,38 @@ from PIL import Image
 import barcode 
 from barcode import EAN13
 from barcode.writer import ImageWriter
-#this module also uses PIL module as default
 
-#Print all barcode types:
-#print(barcode.PROVIDED_BARCODES)
+# Function to generate a filename based on the current date and time or a custom name if provided.
+def FileName(customize=''):
+    if customize:
+        return customize
+    else:
+        now = datetime.now().strftime("%d-%m-%Y %H-%M-%S")
+        return now
 
+# Function to generate a barcode for a numeric input (EAN-13 barcode).
+def NumberBarcode(number):
+    name = FileName()  # Generate a unique filename
 
-def FileName(customize=''):  #sets the file name (date and time as default name)
-	if customize:
-		return customize
-	else:
-		now = datetime.now().strftime("%d-%m-%Y %H-%M-%S")
-		return now  #returns the date and time as a string
+    with open(f'{name}.png', 'wb') as f:  # Create the PNG file to store the barcode image
+        EAN13(str(number), writer=ImageWriter()).write(f)  # Create the EAN-13 barcode using the given number
+        img = Image.open(f"{name}.png")  # Open the generated barcode image
+        img.show()  # Display the barcode image
 
+# Function to generate a barcode for any given text input and barcode type.
+# By default, it uses the 'code128' type which supports both numbers and alphabets.
+def AnyBarcode(text, Type='code128'):
+    name = FileName()  # Generate a unique filename
 
-def NumberBarcode(number):  #only numbers
-	name = FileName()
+    BarcodeType = barcode.get_barcode_class(Type)  # Set the desired barcode type
+    image = BarcodeType(text, writer=ImageWriter())  # Create the barcode using the given text and type
+    image.save(name)  # Save the generated barcode image to a file
 
-	with open(f'{name}.png','wb') as f:  #creating the jpg file as write binary
-		EAN13(str(number),writer=ImageWriter()).write(f) #creare the barcode in EAN13 class (first arg=the number)
-		img = Image.open(f"{name}.png")
-		img.show()
+    img = Image.open(f"{name}.png")  # Open the generated barcode image
+    img.show()  # Display the barcode image
 
-
-#this function is more flexable ()
-#you can change the barcodetype easily by giving the name of
-#any barcode class as the second arg. it is code128 as default
-#it is used for both numbers and alphabets, but its lenght is not always the best
-def AnyBarcode(text,Type = 'code128'):
-	name = FileName()
-
-	BarcodeType = barcode.get_barcode_class(Type) #set the barcode type as code128 or anything else
-	image = BarcodeType(text, writer=ImageWriter()) #creating the barcode (first arg=the text)
-	image.save(name) #creates the file (arg = file name)
-
-	img = Image.open(f"{name}.png")
-	img.show()
-
-
-#run:
+# Example: Generate and display a barcode for the given text 'Pardis Kiaeifar' using the default 'code128' type.
 AnyBarcode('Pardis Kiaeifar')
+
+# Example: Generate and display an EAN-13 barcode for the given number '1001234567890'.
 NumberBarcode('1001234567890')
-
-
-#try this updates:
-# set a default directory (like in another folder) and changeable
-# use tkinter and make the client enter the text without seeing the source code
