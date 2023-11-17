@@ -1,32 +1,24 @@
-# Barcode Generator
+# QRCodeGenerator
+This Python program generates a QR code for a specified data input using the qrcode library. The Pillow (PIL) library is used to create and display the QR code image. The generated QR code is saved with a filename based on the current date and time unless a custom name is provided.
 
-## Description
-
-This is a Python script that allows you to generate barcodes for numeric values and text inputs. The script uses the `barcode` and `PIL` (Python Imaging Library) libraries to create and display barcode images. The barcodes generated can be saved as PNG files.
-
-## Prerequisites
-
-Before running the script, make sure you have the following libraries installed:
-
-- barcode
-- PIL
+## Requirements
+- Python 3.x
+- Pillow library (install with: `pip install Pillow`)
+- qrcode library (install with: `pip install qrcode`)
 
 ## Usage
+1. Ensure that the required libraries are installed.
+2. Run the program by executing the script (python QRCodeGenerator.py).
+3. The program generates a QR code for the specified data (for example, 'google.com').
+4. The generated QR code image is displayed, and a PNG file is saved with a filename based on the current date and time.
 
-1. Clone the repository or download the Python script `Barcode.py` and run the code.
+## Functionality
+- The program generates a QR code with specified data.
+- The QR code is displayed using the Pillow library.
+- The generated QR code image is saved with a filename based on the current date and time, or a custom name if provided.
 
-2. To generate a barcode for a numeric value (EAN-13 barcode), use the NumberBarcode function:
+## Customizing Filename
+- To customize the filename, provide a string when calling the `FileName` function. For example: `FileName('custom_name')`.
+- If no custom name is provided, the filename will be based on the current date and time.
 
-NumberBarcode('1001234567890')
-
-This will generate and display an EAN-13 barcode for the provided number '1001234567890'.
-
-4. To generate a barcode for any text input and barcode type, use the AnyBarcode function:
-
-AnyBarcode('PariKia', Type='code128')
-
-This will generate and display a barcode for the given text 'PariKia' using the 'code128' barcode type (which supports both numbers and alphabets).
-
-Note: You can customize the barcode type by providing the appropriate type as the Type parameter in the AnyBarcode function.
-
-Feel free to use and modify this script according to your needs. Happy coding!
+**Note:** Ensure that the specified data is compatible with QR code standards.
