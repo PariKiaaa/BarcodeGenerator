@@ -1,8 +1,7 @@
+# Import necessary modules
 from datetime import datetime
 from PIL import Image
-import barcode 
-from barcode import EAN13
-from barcode.writer import ImageWriter
+import qrcode
 
 # Function to generate a filename based on the current date and time or a custom name if provided.
 def FileName(customize=''):
@@ -11,30 +10,35 @@ def FileName(customize=''):
     else:
         now = datetime.now().strftime("%d-%m-%Y %H-%M-%S")
         return now
+    
+def generate(data):
+    # Create a QRCode instance with specified version, box size, and border
+    qr = qrcode.QRCode(
+        version= 1,
+        box_size = 15,
+        border = 15
+    )
 
-# Function to generate a barcode for a numeric input (EAN-13 barcode).
-def NumberBarcode(number):
-    name = FileName()  # Generate a unique filename
+    # Add data to the QR code instance and make it fit
+    qr.add_data(data)
+    qr.make(fit=True)
+    
+    # Make the QR code image with specified fill and back color
+    img = qr.make_image(fill='black', back_color='white')
 
-    with open(f'{name}.png', 'wb') as f:  # Create the PNG file to store the barcode image
-        EAN13(str(number), writer=ImageWriter()).write(f)  # Create the EAN-13 barcode using the given number
-        img = Image.open(f"{name}.png")  # Open the generated barcode image
-        img.show()  # Display the barcode image
+    # Generate a filename
+    name = FileName()
 
-# Function to generate a barcode for any given text input and barcode type.
-# By default, it uses the 'code128' type which supports both numbers and alphabets.
-def AnyBarcode(text, Type='code128'):
-    name = FileName()  # Generate a unique filename
+    # Save the QR code image with the generated filename
+    img.save(f'{name}.png')
 
-    BarcodeType = barcode.get_barcode_class(Type)  # Set the desired barcode type
-    image = BarcodeType(text, writer=ImageWriter())  # Create the barcode using the given text and type
-    image.save(name)  # Save the generated barcode image to a file
+    # Open the generated barcode image
+    image = Image.open(f"{name}.png")
+    
+    # Display the generated QR code image
+    image.show() 
 
-    img = Image.open(f"{name}.png")  # Open the generated barcode image
-    img.show()  # Display the barcode image
-
-# Example: Generate and display a barcode for the given text 'Pardis Kiaeifar' using the default 'code128' type.
-AnyBarcode('PariKia')
-
-# Example: Generate and display an EAN-13 barcode for the given number '1001234567890'.
-NumberBarcode('1001234567890')
+# Example data
+data = 'google.com'
+# Generate QR code for the example data
+generate(data)
